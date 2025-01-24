@@ -1,4 +1,4 @@
-package intermideate
+package intermediate
 
 import (
 	"cert-demo/pkg/rootca"

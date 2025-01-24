@@ -1,23 +1,27 @@
 package cmd
 
 import (
-	"fmt"
+	"cert-demo/pkg/intermediate"
+	"cert-demo/pkg/rootca"
+	"cert-demo/pkg/server"
+	"cert-demo/pkg/utils"
 
 	"github.com/spf13/cobra"
 )
 
-var fileName string
-
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "short explain",
-	Long:  "Long explain",
+	Short: "새로운 인증서 세트 생성",
+	Long:  "rootCA, intermediateCA, server 그리고 chaining 인증서를 생성 합니다.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("filename = %s\n", fileName)
+		rootca.GenRootCert()
+		intermediate.GenIntermidiateCert()
+		server.GenServerCert()
+
+		utils.ChainingCert()
 	},
 }
 
 func init() {
-	newCmd.Flags().StringVarP(&fileName, "filename", "f", "", "attach file")
 	rootCmd.AddCommand(newCmd)
 }
