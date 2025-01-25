@@ -1,7 +1,6 @@
 package intermediate
 
 import (
-	"cert-demo/pkg/rootca"
 	"cert-demo/pkg/utils"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -12,15 +11,30 @@ import (
 	"time"
 )
 
+type IntermediateCertParams struct {
+	Organization string
+}
+
 var IntermediateCert *x509.Certificate
 var IntermediateKey *ecdsa.PrivateKey
 
-func GenIntermidiateCert(organization string) {
+func GenIntermidiateCert(certPath, keyPath string, params *IntermediateCertParams) {
+
+	caCert, err := utils.LoadCert(certPath)
+	if err != nil {
+		panic("ca cert read error")
+	}
+
+	caKey, err := utils.LoadKey(keyPath)
+	if err != nil {
+		panic("ca key read error")
+	}
+
 	intermediateKey, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	intermediateTemplate := &x509.Certificate{
 		SerialNumber: big.NewInt(2),
 		Subject: pkix.Name{
-			Organization: []string{organization},
+			Organization: []string{params.Organization},
 		},
 		NotBefore:             time.Now(),
 		NotAfter:              time.Now().AddDate(90, 0, 0), // 90년 유효
@@ -30,7 +44,7 @@ func GenIntermidiateCert(organization string) {
 		MaxPathLen:            1,
 	}
 
-	intermediateCertDER, _ := x509.CreateCertificate(rand.Reader, intermediateTemplate, rootca.RootCert, &intermediateKey.PublicKey, rootca.RootKey)
+	intermediateCertDER, _ := x509.CreateCertificate(rand.Reader, intermediateTemplate, caCert, &intermediateKey.PublicKey, caKey)
 	intermediateCert, _ := x509.ParseCertificate(intermediateCertDER)
 
 	IntermediateCert = intermediateCert

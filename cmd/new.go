@@ -29,13 +29,18 @@ var newCmd = &cobra.Command{
 	SilenceErrors: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		// if CommonName == "" {
-		// 	return errors.New("'--common-name'이 설정되지 않았습니다")
-		// }
+		intermediateParams := intermediate.IntermediateCertParams{
+			Organization: InterOrganizationName,
+		}
+
+		serverParams := server.ServerCertParams{
+			Organization: ServerOrganizationName,
+			San:          San,
+		}
 
 		rootca.GenRootCert(RootOrganizationName)
-		intermediate.GenIntermidiateCert(InterOrganizationName)
-		server.GenServerCert(ServerOrganizationName, San)
+		intermediate.GenIntermidiateCert("root.pem", "root.key", &intermediateParams)
+		server.GenServerCert("intermediate.pem", "intermediate.key", &serverParams)
 
 		utils.ChainingCert()
 
@@ -46,15 +51,12 @@ var newCmd = &cobra.Command{
 func init() {
 	newCmd.Flags().StringVar(&RootOrganizationName, "root-organization-name", "", "인증서 RootCA Organization Name")
 	newCmd.Flags().StringVar(&InterOrganizationName, "inter-organization-name", "", "인증서 IntermediateCA Organization Name")
-	// newCmd.Flags().StringVar(&CommonName, "common-name", "", "인증서 Common Name")
-
 	newCmd.Flags().StringVar(&ServerOrganizationName, "server-organization-name", "", "인증서 Server Organization Name")
 	newCmd.Flags().StringArrayVar(&San, "san", []string{}, "서버 인증서 Subject Alternative Name")
 
 	newCmd.MarkFlagRequired("root-organization-name")
 	newCmd.MarkFlagRequired("inter-organization-name")
 
-	// newCmd.MarkFlagRequired("common-name")
 	newCmd.MarkFlagRequired("server-organization-name")
 	newCmd.MarkFlagRequired("san")
 
