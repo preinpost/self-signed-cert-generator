@@ -15,15 +15,15 @@ import (
 var IntermediateCert *x509.Certificate
 var IntermediateKey *ecdsa.PrivateKey
 
-func GenIntermidiateCert() {
+func GenIntermidiateCert(organization string) {
 	intermediateKey, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	intermediateTemplate := &x509.Certificate{
 		SerialNumber: big.NewInt(2),
 		Subject: pkix.Name{
-			Organization: []string{"Inje Intermediate CA"},
+			Organization: []string{organization},
 		},
 		NotBefore:             time.Now(),
-		NotAfter:              time.Now().AddDate(5, 0, 0), // 5년 유효
+		NotAfter:              time.Now().AddDate(90, 0, 0), // 90년 유효
 		KeyUsage:              x509.KeyUsageCertSign | x509.KeyUsageCRLSign,
 		BasicConstraintsValid: true,
 		IsCA:                  true,

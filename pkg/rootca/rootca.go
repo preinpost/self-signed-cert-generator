@@ -14,15 +14,15 @@ import (
 var RootCert *x509.Certificate
 var RootKey *ecdsa.PrivateKey
 
-func GenRootCert() {
+func GenRootCert(organization string) {
 	rootKey, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	rootTemplate := &x509.Certificate{
 		SerialNumber: big.NewInt(1),
 		Subject: pkix.Name{
-			Organization: []string{"Inje Root CA"},
+			Organization: []string{organization},
 		},
 		NotBefore:             time.Now(),
-		NotAfter:              time.Now().AddDate(10, 0, 0), // 10년 유효
+		NotAfter:              time.Now().AddDate(100, 0, 0), // 100년 유효
 		KeyUsage:              x509.KeyUsageCertSign | x509.KeyUsageCRLSign,
 		BasicConstraintsValid: true,
 		IsCA:                  true,
