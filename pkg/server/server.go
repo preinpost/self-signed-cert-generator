@@ -7,8 +7,9 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"math/big"
-	"self-signed-cert-generator/pkg/utils"
 	"time"
+
+	"github.com/preinpost/self-signed-cert-generator/pkg/utils"
 )
 
 type ServerCertParams struct {

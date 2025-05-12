@@ -1,4 +1,4 @@
-module self-signed-cert-generator
+module github.com/preinpost/self-signed-cert-generator
 
 go 1.23.5
 

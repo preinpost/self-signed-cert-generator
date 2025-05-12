@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"self-signed-cert-generator/pkg/intermediate"
-	"self-signed-cert-generator/pkg/rootca"
-	"self-signed-cert-generator/pkg/server"
-	"self-signed-cert-generator/pkg/utils"
+	"github.com/preinpost/self-signed-cert-generator/pkg/intermediate"
+	"github.com/preinpost/self-signed-cert-generator/pkg/rootca"
+	"github.com/preinpost/self-signed-cert-generator/pkg/server"
+	"github.com/preinpost/self-signed-cert-generator/pkg/utils"
 
 	"github.com/spf13/cobra"
 )

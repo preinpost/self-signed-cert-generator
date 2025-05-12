@@ -1,6 +1,6 @@
 package main
 
-import "self-signed-cert-generator/cmd"
+import "github.com/preinpost/self-signed-cert-generator/cmd"
 
 func main() {
 	cmd.Execute()
