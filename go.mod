@@ -1,4 +1,4 @@
-module cert-demo
+module self-signed-cert-generator
 
 go 1.23.5
 

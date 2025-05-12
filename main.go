@@ -1,8 +1,6 @@
 package main
 
-import "cert-demo/cmd"
-
-var Outdir = "./out"
+import "self-signed-cert-generator/cmd"
 
 func main() {
 	cmd.Execute()

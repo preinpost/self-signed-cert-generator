@@ -1,13 +1,13 @@
 package server
 
 import (
-	"cert-demo/pkg/utils"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"math/big"
+	"self-signed-cert-generator/pkg/utils"
 	"time"
 )
 

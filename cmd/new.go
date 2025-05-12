@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"cert-demo/pkg/intermediate"
-	"cert-demo/pkg/rootca"
-	"cert-demo/pkg/server"
-	"cert-demo/pkg/utils"
+	"self-signed-cert-generator/pkg/intermediate"
+	"self-signed-cert-generator/pkg/rootca"
+	"self-signed-cert-generator/pkg/server"
+	"self-signed-cert-generator/pkg/utils"
 
 	"github.com/spf13/cobra"
 )
